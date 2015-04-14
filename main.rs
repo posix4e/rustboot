@@ -1,24 +1,31 @@
+#![feature(custom_attribute)]
+#![feature(no_std)]
+#![feature(core)]
 #![no_std]
 #![allow(ctypes)]
+//extern crate core;
+extern crate core;
+use core::*;
+//use core::prelude::*;
 
-enum Color {
-    Black      = 0,
-    Blue       = 1,
-    Green      = 2,
-    Cyan       = 3,
-    Red        = 4,
-    Pink       = 5,
-    Brown      = 6,
-    LightGray  = 7,
-    DarkGray   = 8,
-    LightBlue  = 9,
-    LightGreen = 10,
-    LightCyan  = 11,
-    LightRed   = 12,
-    LightPink  = 13,
-    Yellow     = 14,
-    White      = 15,
-}
+//enum Color {
+    static Black : u16      = 0;
+    static Blue : u16      = 1;
+    static Green : u16      = 2;
+    static Cyan : u16       = 3;
+    static Red : u16        = 4;
+    static Pink : u16       = 5;
+    static Brown : u16      = 6;
+    static LightGray : u16  = 7;
+    static DarkGray : u16   = 8;
+    static LightBlue : u16  = 9;
+    static LightGreen : u16 = 10;
+    static LightCyan : u16  = 11;
+    static LightRed  : u16  = 12;
+    static LightPink : u16  = 13;
+    static Yellow : u16     = 14;
+    static White : u16      = 15;
+//}
 
 enum Option<T> {
     None,
@@ -26,29 +33,30 @@ enum Option<T> {
 }
 
 struct IntRange {
-    cur: int,
-    max: int
+    cur: i32,
+    max: i32
 }
 
 impl IntRange {
-    fn next(&mut self) -> Option<int> {
+    fn next(&mut self) -> Option<i32> {
         if self.cur < self.max {
             self.cur += 1;
-            Some(self.cur - 1)
+            Option::Some(self.cur - 1)
         } else {
-            None
+            Option::None
         }
     }
 }
 
-fn range(lo: int, hi: int) -> IntRange {
+fn range(lo: i32, hi: i32) -> IntRange {
     IntRange { cur: lo, max: hi }
 }
 
-fn clear_screen(background: Color) {
-    for i in range(0, 80 * 25) {
+fn clear_screen(background: u16) {
+    //for i in range(0, 80 * 25) {
+    for i in 0..80*25 {
         unsafe {
-            *((0xb8000 + i * 2) as *mut u16) = (background as u16) << 12;
+            *((0xb8000 + i * 2) as *mut u16) = background << 12;
         }
     }
 }

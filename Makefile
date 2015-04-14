@@ -10,7 +10,7 @@ all: floppy.img
 .PHONY: clean run
 
 .rs.o:
-	$(RUSTC) -O --target i386-intel-linux --crate-type lib -o $@ --emit obj $<
+	$(RUSTC) -L /Users/mgolub2/Downloads/rust-1.0.0-beta-i686-unknown-linux-gnu/rustc/lib/rustlib/i686-unknown-linux-gnu/lib -O --target i686-unknown-linux-gnu --crate-type lib -o $@ --emit obj $<
 
 .asm.o:
 	$(NASM) -f elf32 -o $@ $<
